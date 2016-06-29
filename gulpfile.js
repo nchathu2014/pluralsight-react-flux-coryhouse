@@ -6,6 +6,7 @@ var open = require('gulp-open'); // Opens a URL in browser
 var browserify = require('browserify'); // Bundles JS
 var reactify = require('reactify'); // Transforms React JSX to JS
 var source = require('vinyl-source-stream'); // Use conventional text streams with gulp
+var clean = require('gulp-clean');//Remove(clean) files/folders use to clean the 'dist' before compile and do the rest
 var concat = require('gulp-concat');
 var lint = require('gulp-eslint');
 
@@ -74,5 +75,10 @@ gulp.task('watch', function(){
   gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
+gulp.task('clean',function(){
+    return gulp.src(config.paths.dist + "/*", {read: false})
+        .pipe(clean());
+});
 
-gulp.task('default',['html','css','lint','js','open','watch']);
+
+gulp.task('default',['clean','html','css','lint','js','open','watch']);
